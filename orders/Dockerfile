@@ -4,8 +4,8 @@ ARG JAVA_FILE=build/libs/*.jar
 
 WORKDIR /usr/src/app
 
-COPY ${JAVA_FILE} la_planete-0.0.1-SNAPSHOT.jar
+COPY ${JAVA_FILE} joyeuse_planete-orders.jar
 
 EXPOSE 8080
 
-CMD [ "java", "-jar", "la_planete-0.0.1-SNAPSHOT.jar" ]
+CMD [ "java", "-jar", "joyeuse_planete-orders.jar" ]
