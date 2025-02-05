@@ -5,7 +5,7 @@ on:
       DOCKERHUB_USERNAME:
         required: true
       
-      DOCKERHUB_PASSWORD:
+      DOCKERHUB_TOKEN:
         required: true
 
 jobs:
@@ -20,10 +20,10 @@ jobs:
       - name: Debug Secrets
         run: |
           echo "DOCKERHUB_USERNAME is set: ${DOCKERHUB_USERNAME:+Yes}"
-          echo "DOCKERHUB_TOKEN is set: ${DOCKERHUB_PASSWORD:+Yes}"
+          echo "DOCKERHUB_TOKEN is set: ${DOCKERHUB_TOKEN:+Yes}"
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_PASSWORD }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
 
       - name: Login to Docker Hub
