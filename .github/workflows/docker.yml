@@ -45,7 +45,7 @@ jobs:
         with:
           push: true
           context: ./${{ matrix.project }}
-          file: ./Dockerfile
+          file: ./${{ matrix.project }}/Dockerfile
           platforms: "linux/arm64,linux/amd64"
           tags: username/app:latest
         env:
