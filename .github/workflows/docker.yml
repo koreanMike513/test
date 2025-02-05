@@ -9,6 +9,9 @@ on:
         required: true
 
 jobs:
+  ci-gradle:
+    uses: ./.github/workflows/ci-gradle.yml
+
   docker:
     strategy:
       matrix:
