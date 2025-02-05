@@ -2,7 +2,7 @@ FROM openjdk:17
 
 ARG JAVA_FILE=build/libs/*.jar
 
-WORKDIR usr/src/app
+WORKDIR /usr/src/app
 
 COPY ${JAVA_FILE} la_planete-0.0.1-SNAPSHOT.jar
 
