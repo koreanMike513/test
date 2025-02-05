@@ -5,9 +5,6 @@ on:
 jobs:
   build_on_test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project: [ foods, orders, payment, notifications ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,13 +21,20 @@ jobs:
       - name: Test and Build
         run: |
           chmod +x gradlew
-          ./gradlew :${{ matrix.project }}:clean :${{ matrix.project }}:build
+          ./gradlew clean build
+
+      - name: Check 
+        run: |
+          pwd
+          ls
+          ls -R *.jar 
+        
 
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.project }}-test-results
+          name: test-results
           path: "**/build/reports/tests/test/"
 
 

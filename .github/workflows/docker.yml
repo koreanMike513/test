@@ -15,7 +15,7 @@ jobs:
     needs: [ ci-gradle ]
     strategy:
       matrix:
-        project: [foods, orders, notifications, payment]
+        project: [ foods, orders, notifications, payment ]
 
     runs-on: ubuntu-latest
 
@@ -23,14 +23,11 @@ jobs:
       - name: Checkout Repository  
         uses: actions/checkout@v4
 
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build_on_test-artifacts
-          path: ./${{ matrix.project }}/build/libs
-
-      - name: Debug JAR File
-        run: ls -R ./${{ matrix.project }}/build/libs
+      - name: Check 2
+        run: |
+          pwd
+          ls
+          ls -R *.jar 
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
