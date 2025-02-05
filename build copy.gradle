@@ -1,0 +1,83 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+bootJar.enabled = false
+jar.enabled = false
+
+group = 'com.f-lab.joyeuse_planete'
+version = '0.0.1-SNAPSHOT'
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	group = 'com.f-lab.joyeuse_planete'
+
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(17)
+		}
+	}
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+
+		// lombok 테스트에서도 사용
+		testCompileOnly 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
+
+		// Querydsl 추가
+		implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+		annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+		annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+		annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+	}
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
+}
+
+project(":notifications") {
+	dependencies {
+		implementation project(":core")
+		testImplementation project(":core")
+	}
+}
+
+project(":foods") {
+	dependencies {
+		implementation project(":core")
+		testImplementation project(":core")
+	}
+}
+
+project(":orders") {
+	dependencies {
+		implementation project(":core")
+		testImplementation project(":core")
+	}
+}
+
+project(":payment") {
+	dependencies {
+		implementation project(":core")
+		testImplementation project(":core")
+	}
+}
+
