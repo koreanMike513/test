@@ -1,4 +1,0 @@
-rootProject.name = 'joyeuse_planete'
-include 'core', 'notifications','foods', 'orders', 'payment'
-
-
