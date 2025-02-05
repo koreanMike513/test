@@ -23,6 +23,12 @@ jobs:
           chmod +x gradlew
           ./gradlew clean build
 
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build_on_test-artifacts
+          path: "**/build/libs/*.jar"
+
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
