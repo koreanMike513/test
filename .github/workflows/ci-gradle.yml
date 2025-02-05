@@ -27,7 +27,9 @@ jobs:
         run: |
           pwd
           ls
-          ls -R *.jar 
+          
+      - name: Find All JAR Files
+        run: find . -name "*.jar" -print
         
 
       - name: Upload Test Results
