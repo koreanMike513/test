@@ -5,6 +5,9 @@ on:
 jobs:
   build_on_test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [ foods, orders, payment, notifications ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,13 +24,7 @@ jobs:
       - name: Test and Build
         run: |
           chmod +x gradlew
-          ./gradlew clean build
-
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build_on_test-artifacts
-          path: "**/build/libs/*.jar"
+          ./gradlew :${{ matrix.project }}:clean :${{ matrix.project }}:build
 
       - name: Upload Test Results
         if: always()
