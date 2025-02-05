@@ -28,16 +28,6 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-
-      - name: Test and Build
-        run: |
-          chmod +x gradlew
-          ./gradlew clean build
-
-      - name: Check 2
-        run: |
-          pwd
-          ls
       
       - name: Find All JAR Files
         run: find . -name "*.jar" -print
