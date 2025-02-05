@@ -1,15 +1,12 @@
 name: Docker build and push
 on:
   workflow_call:
-
-secrets:
-  username:
-    description: A username for DockerHub
-    required: true
-
-  password:
-    description: An access token for DockerHub
-    required: true
+    secrets:
+      DOCKERHUB_USERNAME:
+        required: true
+      
+      DOCKERHUB_PASSWORD:
+        required: true
 
 
 jobs:
