@@ -17,8 +17,8 @@ jobs:
   docker-build:
     uses: ./.github/workflows/docker.yml
     secrets: 
-      username: ${{ env.DOCKERHUB_USERNAME }}
-      password: ${{ env.DOCKERHUB_TOKEN }}
+      DOCKERHUB_USERNAME: "${{ env.DOCKERHUB_USERNAME }}"
+      DOCKERHUB_TOKEN: "${{ env.DOCKERHUB_TOKEN }}"
 
   terraform:
     name: "Terraform Apply"
