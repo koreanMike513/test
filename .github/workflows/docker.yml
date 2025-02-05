@@ -20,10 +20,10 @@ jobs:
       - name: Debug Secrets
         run: |
           echo "DOCKERHUB_USERNAME is set: ${DOCKERHUB_USERNAME:+Yes}"
-          echo "DOCKERHUB_TOKEN is set: ${DOCKERHUB_TOKEN:+Yes}"
+          echo "DOCKERHUB_TOKEN is set: ${DOCKERHUB_PASSWORD:+Yes}"
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_PASSWORD }}
 
 
       - name: Login to Docker Hub
