@@ -13,6 +13,7 @@ jobs:
     uses: ./.github/workflows/ci-gradle.yml
 
   docker:
+    needs: [ ci-gradle ]
     strategy:
       matrix:
         project: [ foods, orders, notifications, payment ]
