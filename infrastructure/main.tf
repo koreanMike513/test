@@ -13,22 +13,22 @@ provider "aws" {
 
 module "foods" {
   source            = "./foods"
-  docker_food_image = var.docker_food_image
+  docker_food_image = var.DOCKER_FOOD_IMAGE
 }
 
 module "orders" {
   source              = "./orders"
-  docker_orders_image = var.docker_orders_image
+  docker_orders_image = var.DOCKER_ORDERS_IMAGE
 }
 
 module "notifications" {
   source                     = "./notifications"
-  docker_notifications_image = var.docker_notifications_image
+  docker_notifications_image = var.DOCKER_NOTIFICATIONS_IMAGE
 }
 
 module "payment" {
   source               = "./payment"
-  docker_payment_image = var.docker_payment_image
+  docker_payment_image = var.DOCKER_PAYMENT_IMAGE
 }
 
 # module "api_gate_way" {
