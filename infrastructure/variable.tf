@@ -1,19 +1,19 @@
-variable "docker_food_image" {
+variable "DOCKER_FOOD_IMAGE" {
   description = "Docker food image name"
   type        = string
 }
 
-variable "docker_notifications_image" {
+variable "DOCKER_NOTIFICATIONS_IMAGE" {
   description = "Docker notifications image name"
   type        = string
 }
 
-variable "docker_orders_image" {
+variable "DOCKER_ORDERS_IMAGE" {
   description = "Docker orders image name"
   type        = string
 }
 
-variable "docker_payment_image" {
+variable "DOCKER_PAYMENT_IMAGE" {
   description = "Docker payment image name"
   type        = string
 }
