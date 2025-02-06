@@ -6,7 +6,7 @@ module "servers" {
   server_count          = 2
 
   docker_image          = var.docker_food_image
-  aws_security_group_id = var.securities.security_group_id
+  aws_security_group_id = var.aws_security_group_id
   aws_key_pair_name     = var.aws_key_pair_name
 }
 
@@ -16,7 +16,7 @@ module "nginx" {
   server_ami            = "ami-0cbf43fd299e3a464"
   server_instance_type  = "t3.medium"
 
-  aws_security_group_id = var.securities.security_group_id
+  aws_security_group_id = var.aws_security_group_id
   aws_key_pair_name     = var.aws_key_pair_name
   servers               = module.servers.server_ips
 }
