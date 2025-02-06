@@ -12,23 +12,39 @@ provider "aws" {
 }
 
 module "foods" {
-  source            = "./foods"
-  docker_food_image = var.DOCKER_FOOD_IMAGE
+  source                = "./foods"
+  docker_food_image     = var.DOCKER_FOOD_IMAGE
+  aws_security_group_id = module.securities.security_group_id
+  aws_key_pair_name     = module.key_pair.aws_key_pair_name
 }
 
 module "orders" {
-  source              = "./orders"
-  docker_orders_image = var.DOCKER_ORDERS_IMAGE
+  source                = "./orders"
+  docker_orders_image   = var.DOCKER_ORDERS_IMAGE
+  aws_security_group_id = module.securities.security_group_id
+  aws_key_pair_name     = module.key_pair.aws_key_pair_name
 }
 
 module "notifications" {
   source                     = "./notifications"
   docker_notifications_image = var.DOCKER_NOTIFICATIONS_IMAGE
+  aws_security_group_id      = module.securities.security_group_id
+  aws_key_pair_name          = module.key_pair.aws_key_pair_name
 }
 
 module "payment" {
-  source               = "./payment"
-  docker_payment_image = var.DOCKER_PAYMENT_IMAGE
+  source                = "./payment"
+  docker_payment_image  = var.DOCKER_PAYMENT_IMAGE
+  aws_security_group_id = module.securities.security_group_id
+  aws_key_pair_name     = module.key_pair.aws_key_pair_name
+}
+
+module "key_pair" {
+  source = "../common/key"
+}
+
+module "securities" {
+  source = "../common/security"
 }
 
 # module "api_gate_way" {
