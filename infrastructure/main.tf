@@ -40,11 +40,11 @@ module "payment" {
 }
 
 module "key_pair" {
-  source = "../common/key"
+  source = "./common/key"
 }
 
 module "securities" {
-  source = "../common/security"
+  source = "./common/security"
 }
 
 # module "api_gate_way" {
