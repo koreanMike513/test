@@ -74,6 +74,12 @@ public class FoodController {
         .body(ResponseUtil.FOOD_DELETE_SUCCESS);
   }
 
+  @GetMapping("/ping")
+  public ResponseEntity<String> healthcheck() {
+    return ResponseEntity.status(HttpStatus.OK)
+        .body("pong");
+  }
+
   static abstract class ResponseUtil {
 
     public static final String FOOD_CREATE_SUCCESS = "성공적으로 생성되었습니다.";

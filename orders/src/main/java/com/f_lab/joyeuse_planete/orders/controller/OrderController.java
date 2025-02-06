@@ -45,4 +45,10 @@ public class OrderController {
         .status(HttpStatus.CREATED)
         .body(orderService.createFoodOrder(orderCreateRequestDTO));
   }
+
+  @GetMapping("/ping")
+  public ResponseEntity<String> healthcheck() {
+    return ResponseEntity.status(HttpStatus.OK)
+        .body("pong");
+  }
 }
