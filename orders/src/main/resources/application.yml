@@ -3,7 +3,7 @@ server:
 
 spring:
   kafka:
-#    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:9092
     producer:
       transaction-id-prefix: orders-tx
 
@@ -41,3 +41,16 @@ logging:
           jpa:
             JpaTransactionManager: TRACE
       hibernate.sql: TRACE
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER_IP}
+
+server:
+  port: 8080
