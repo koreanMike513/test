@@ -16,12 +16,12 @@ resource "aws_instance" "server" {
     sleep 5
 
     #Set KAFKA_SERVER_IP
-    export KAFKA_SERVER_IP=${var.KAFKA_SERVER_IP}
-
+    sudo export KAFKA_SERVER_IP=${var.KAFKA_SERVER_IP}
 
     # Run the Docker container
     docker run -d -p 8080:8080 --name web_server \
-    -e KAFKA_SERVER_IP=$KAFKA_SERVER_IP:9092 \
+     -e KAFKA_SERVER_IP=$KAFKA_SERVER_IP \
+     -e SPRING_PROFILES_ACTIVE=prod \
     ${var.docker_image}
   EOF
 
