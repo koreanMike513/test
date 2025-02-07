@@ -11,40 +11,52 @@ provider "aws" {
   region = "eu-west-2"
 }
 
-module "foods" {
-  source                = "./foods"
-  docker_food_image     = var.DOCKER_FOOD_IMAGE
-  aws_security_group_id = module.securities.security_group_id
-  aws_key_pair_name     = module.key_pair.aws_key_pair_name
-}
-
-module "orders" {
-  source                = "./orders"
-  docker_orders_image   = var.DOCKER_ORDERS_IMAGE
-  aws_security_group_id = module.securities.security_group_id
-  aws_key_pair_name     = module.key_pair.aws_key_pair_name
-}
-
-module "notifications" {
-  source                     = "./notifications"
-  docker_notifications_image = var.DOCKER_NOTIFICATIONS_IMAGE
-  aws_security_group_id      = module.securities.security_group_id
-  aws_key_pair_name          = module.key_pair.aws_key_pair_name
-}
-
-module "payment" {
-  source                = "./payment"
-  docker_payment_image  = var.DOCKER_PAYMENT_IMAGE
+module "kafka" {
+  source                = "kafka"
+  server_ami            = "ami-0cbf43fd299e3a464"
+  server_instance_type  = "t3.medium"
   aws_security_group_id = module.securities.security_group_id
   aws_key_pair_name     = module.key_pair.aws_key_pair_name
 }
 
 module "key_pair" {
-  source = "./common/key"
+  source = "common/key"
 }
 
 module "securities" {
-  source = "./common/security"
+  source = "common/security"
+}
+
+module "foods" {
+  source                = "foods"
+  docker_food_image     = var.DOCKER_FOOD_IMAGE
+  aws_security_group_id = module.securities.security_group_id
+  aws_key_pair_name     = module.key_pair.aws_key_pair_name
+  KAFKA_SERVER_IP       = module.kafka.kafka_ip
+}
+
+module "orders" {
+  source                = "orders"
+  docker_orders_image   = var.DOCKER_ORDERS_IMAGE
+  aws_security_group_id = module.securities.security_group_id
+  aws_key_pair_name     = module.key_pair.aws_key_pair_name
+  KAFKA_SERVER_IP       = module.kafka.kafka_ip
+}
+
+module "notifications" {
+  source                     = "notifications"
+  docker_notifications_image = var.DOCKER_NOTIFICATIONS_IMAGE
+  aws_security_group_id      = module.securities.security_group_id
+  aws_key_pair_name          = module.key_pair.aws_key_pair_name
+  KAFKA_SERVER_IP       = module.kafka.kafka_ip
+}
+
+module "payment" {
+  source                = "payment"
+  docker_payment_image  = var.DOCKER_PAYMENT_IMAGE
+  aws_security_group_id = module.securities.security_group_id
+  aws_key_pair_name     = module.key_pair.aws_key_pair_name
+  KAFKA_SERVER_IP       = module.kafka.kafka_ip
 }
 
 # module "api_gate_way" {

@@ -8,6 +8,7 @@ module "servers" {
   docker_image          = var.docker_food_image
   aws_security_group_id = var.aws_security_group_id
   aws_key_pair_name     = var.aws_key_pair_name
+  KAFKA_SERVER_IP       = ""
 }
 
 module "nginx" {
@@ -25,6 +26,9 @@ variable "aws_security_group_id" {
 }
 
 variable "aws_key_pair_name" {
+}
+
+variable "KAFKA_SERVER_IP" {
 }
 
 variable "docker_food_image" {

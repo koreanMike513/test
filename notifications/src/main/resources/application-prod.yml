@@ -1,0 +1,40 @@
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER_IP}
+    producer:
+      transaction-id-prefix: notifications-tx
+
+    consumer:
+      group-id: notifications
+
+orders:
+  events:
+    topic:
+      name: orders.order-created-event
+      fail: orders.orders-creation-failed-event
+
+  dead-letter-topic:
+    name: notifications.dead-letter-topic
+
+foods:
+  events:
+    topic:
+      fail: foods.order-creation-failed-event
+
+kafka:
+  topic:
+    partitions: 3
+
+  container:
+    concurrency: 3
+
+
+logging:
+  level:
+    org:
+      apache:
+#        kafka: TRACE
+        zorm:
+          jpa:
+            JpaTransactionManager: TRACE
+      hibernate.sql: TRACE

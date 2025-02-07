@@ -8,6 +8,7 @@ import com.f_lab.joyeuse_planete.orders.dto.response.OrderDTO;
 import com.f_lab.joyeuse_planete.orders.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,10 +31,17 @@ public class OrderController {
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public Page<OrderDTO> findOrders(@ModelAttribute OrderSearchCondition condition) {
+  public Page<OrderDTO> getOrderList(@ModelAttribute OrderSearchCondition condition) {
     PageRequest pageRequest = PageRequest.of(condition.getPage(), condition.getSize());
 
-    return orderService.findOrders(condition, pageRequest);
+    return orderService.getOrderList(condition, pageRequest);
+  }
+
+  @GetMapping("/{orderId}")
+  public ResponseEntity<OrderDTO> getOrder(@PathVariable("orderId") Long orderId) {
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(orderService.getOrder(orderId));
   }
 
   @PostMapping("/foods")
@@ -44,6 +52,15 @@ public class OrderController {
     return ResponseEntity
         .status(HttpStatus.CREATED)
         .body(orderService.createFoodOrder(orderCreateRequestDTO));
+  }
+
+  @DeleteMapping("/member/{orderId}")
+  public ResponseEntity<String> deleteMemberOrder(@PathVariable("orderId") Long orderId) {
+    orderService.deleteOrderByMember(orderId);
+
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body("DD");
   }
 
   @GetMapping("/ping")

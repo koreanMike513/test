@@ -34,15 +34,41 @@ public class OrderService {
   @Value("${orders.events.topic.name}")
   String ORDER_CREATED_EVENT;
 
-  public Page<OrderDTO> findOrders(OrderSearchCondition condition, Pageable pageable) {
+  public Page<OrderDTO> getOrderList(OrderSearchCondition condition, Pageable pageable) {
     return orderRepository.findOrders(condition, pageable);
   }
 
+  public OrderDTO getOrder(Long orderId) {
+    OrderDTO orderDTO = orderRepository.getOrder(orderId);
+
+    if (orderDTO == null)
+      throw new JoyeusePlaneteApplicationException(ErrorCode.ORDER_NOT_EXIST_EXCEPTION);
+
+    return orderDTO;
+  }
+
   @Transactional
-  public void updateOrderStatus(Long orderId, OrderStatus status) {
+  public void deleteOrderByMember(Long orderId) {
+    Order order;
+    try {
+      order = updateOrderStatus(orderId, OrderStatus.MEMBER_CANCELED);
+      order.setDeleted(true);
+      orderRepository.save(order);
+
+    } catch (Exception e) {
+
+    }
+
+    sendKafkaOrderCancellationEvent();
+  }
+
+  @Transactional
+  public Order updateOrderStatus(Long orderId, OrderStatus status) {
     Order order = findOrderById(orderId);
     order.setStatus(status);
     orderRepository.save(order);
+
+    return order;
   }
 
   @Transactional
@@ -78,6 +104,10 @@ public class OrderService {
       LogUtil.exception("OrderService.sendKafkaOrderCreatedEvent", e);
       throw new RuntimeException(e);
     }
+  }
+
+  public void sendKafkaOrderCancellationEvent() {
+
   }
 
   private Order findOrderById(Long orderId) {

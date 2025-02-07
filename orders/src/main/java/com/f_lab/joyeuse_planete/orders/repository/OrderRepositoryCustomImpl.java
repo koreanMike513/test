@@ -72,6 +72,31 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
   }
 
   @Override
+  public OrderDTO getOrder(Long orderId) {
+    return queryFactory.select(
+        new QOrderDTO(
+            order.id.as("orderId"),
+            food.foodName,
+            order.totalCost,
+            food.currency.currencyCode,
+            food.currency.currencySymbol,
+            order.quantity,
+            order.rate,
+            order.status.stringValue(),
+            order.payment.id.as("paymentId"),
+            order.voucher.id.as("voucherId"),
+            order.createdAt.as("createdAt")
+        ))
+        .from(order)
+        .leftJoin(order.food, food)
+        .leftJoin(order.payment, payment)
+        .leftJoin(food.currency, currency)
+        .where(eqOrderId(orderId))
+        .fetch()
+        .get(0);
+  }
+
+  @Override
   public Page<OrderDTO> findOrders(OrderSearchCondition condition, Pageable pageable) {
     List<OrderDTO> results = queryFactory
         .select(new QOrderDTO(
@@ -137,6 +162,10 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
 
   private BooleanExpression totalCostLoe(BigDecimal cost) {
     return cost != null ? order.totalCost.loe(cost) : null;
+  }
+
+  private BooleanExpression eqOrderId(Long orderId) {
+    return order.id.eq(orderId);
   }
 
   private OrderSpecifier[] getOrders(List<String> sortBy) {

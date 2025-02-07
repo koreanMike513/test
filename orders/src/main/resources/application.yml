@@ -3,7 +3,7 @@ server:
 
 spring:
   kafka:
-    bootstrap-servers: localhost:9092
+#    bootstrap-servers: localhost:9092
     producer:
       transaction-id-prefix: orders-tx
 
@@ -37,7 +37,7 @@ logging:
     org:
       apache:
 #        kafka: TRACE
-        orm:
+        zorm:
           jpa:
             JpaTransactionManager: TRACE
       hibernate.sql: TRACE

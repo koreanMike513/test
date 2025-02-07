@@ -15,7 +15,10 @@ resource "aws_instance" "server" {
     systemctl enable docker
 
     # Run the Docker container
-    docker run -d -p 8080:8080 --name web_server ${ var.docker_image }
+    docker run -d -p 8080:8080 --name web_server /
+    -e KAFKA_SERVER_IP=${ var.KAFKA_SERVER_IP  }
+
+    ${ var.docker_image }
   EOF
 
   tags = {
