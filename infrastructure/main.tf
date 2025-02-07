@@ -9,9 +9,7 @@ terraform {
 
 provider "aws" {
   region = "eu-west-2"
-  // adfasdf
 }
-
 
 module "kafka" {
   source                = "kafka"
