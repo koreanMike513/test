@@ -27,13 +27,6 @@ module "securities" {
   source = "./common/security"
 }
 
-module "foods" {
-  source                = "./foods"
-  docker_food_image     = var.DOCKER_FOOD_IMAGE
-  aws_security_group_id = module.securities.security_group_id
-  aws_key_pair_name     = module.key_pair.aws_key_pair_name
-  KAFKA_SERVER_IP       = module.kafka.kafka_ip
-}
 
 module "orders" {
   source                = "./orders"
@@ -43,21 +36,6 @@ module "orders" {
   KAFKA_SERVER_IP       = module.kafka.kafka_ip
 }
 
-module "notifications" {
-  source                     = "./notifications"
-  docker_notifications_image = var.DOCKER_NOTIFICATIONS_IMAGE
-  aws_security_group_id      = module.securities.security_group_id
-  aws_key_pair_name          = module.key_pair.aws_key_pair_name
-  KAFKA_SERVER_IP       = module.kafka.kafka_ip
-}
-
-module "payment" {
-  source                = "./payment"
-  docker_payment_image  = var.DOCKER_PAYMENT_IMAGE
-  aws_security_group_id = module.securities.security_group_id
-  aws_key_pair_name     = module.key_pair.aws_key_pair_name
-  KAFKA_SERVER_IP       = module.kafka.kafka_ip
-}
 
 # module "api_gate_way" {
 #   source                      = "./common/gateway"
