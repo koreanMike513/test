@@ -1,6 +1,7 @@
 package com.f_lab.joyeuse_planete.core.domain;
 
 
+import com.f_lab.joyeuse_planete.core.domain.base.BaseEntity;
 import com.f_lab.joyeuse_planete.core.domain.base.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,7 +32,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @Table(name = "orders")
-public class Order extends BaseTimeEntity {
+public class Order extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)

@@ -18,6 +18,10 @@ variable "server_count" {
 
 }
 
+variable "KAFKA_SERVER_IP" {
+
+}
+
 variable "aws_security_group_id" {
   description = "Security group ID for EC2"
 }

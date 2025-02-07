@@ -13,4 +13,5 @@ public interface OrderRepositoryCustom {
 //  Page<OrderDTO> findOrders(Long memberId, OrderSearchCondition condition, Pageable pageable);
   Page<OrderDTO> findOrders(OrderSearchCondition condition, Pageable pageable);
   Order saveOrder(OrderCreateRequestDTO request);
+  OrderDTO getOrder(Long orderId);
 }
