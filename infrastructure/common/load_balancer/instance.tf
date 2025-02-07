@@ -14,7 +14,7 @@ resource "aws_instance" "nginx" {
     # Configure NGINX as a load balancer
     cat <<EOT > /etc/nginx/conf.d/load-balancer.conf
     upstream web_server {
-      ${join("\n\t", formatlist("server %s:8080;", var.servers))}
+      ${join("\n  ", formatlist("server %s:8080;", var.servers))}
     }
 
     server {
