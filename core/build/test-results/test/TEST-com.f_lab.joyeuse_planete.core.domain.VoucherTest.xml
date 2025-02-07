@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.f_lab.joyeuse_planete.core.domain.VoucherTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-02-07T12:22:15" hostname="GUNHOui-MacBookPro-2.local" time="0.001">
+<testsuite name="com.f_lab.joyeuse_planete.core.domain.VoucherTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-02-07T18:11:39" hostname="GUNHOui-MacBookPro-2.local" time="0.001">
   <properties/>
   <testcase name="0 ~ 100 사이의 값이 들어올 때 정상적으로 할인이 적용된 값을 return" classname="com.f_lab.joyeuse_planete.core.domain.VoucherTest" time="0.0"/>
   <testcase name="currency 값에 null 값이 들어갔을 경우에 예외를 던진다." classname="com.f_lab.joyeuse_planete.core.domain.VoucherTest" time="0.001"/>
