@@ -13,10 +13,15 @@ resource "aws_instance" "server" {
     yum install -y docker
     systemctl start docker
     systemctl enable docker
+    sleep 5
+
+    #Set KAFKA_SERVER_IP
+    export KAFKA_SERVER_IP=${var.KAFKA_SERVER_IP}
+
 
     # Run the Docker container
     docker run -d -p 8080:8080 --name web_server \
-    -e KAFKA_SERVER_IP=${var.KAFKA_SERVER_IP}:9092 \
+    -e KAFKA_SERVER_IP=$KAFKA_SERVER_IP:9092 \
     ${var.docker_image}
   EOF
 
