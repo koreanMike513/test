@@ -41,6 +41,8 @@ module "orders" {
   aws_security_group_id = module.securities.security_group_id
   aws_key_pair_name     = module.key_pair.aws_key_pair_name
   KAFKA_SERVER_IP       = module.kafka.kafka_ip
+
+  depends_on            = [ module.kafka ] 
 }
 
 # module "notifications" {
