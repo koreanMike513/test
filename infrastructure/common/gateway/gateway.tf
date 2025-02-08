@@ -8,7 +8,7 @@ resource "aws_apigatewayv2_integration" "foods" {
   api_id             = aws_apigatewayv2_api.joyeuse_planete.id
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
-  integration_uri    = "http://${var.food_lb_ip}/api/v1/foods"
+  integration_uri    = "http://${var.food_lb_ip}/api/v1"
 }
 
 resource "aws_apigatewayv2_route" "foods" {
@@ -17,44 +17,44 @@ resource "aws_apigatewayv2_route" "foods" {
   target    = "integrations/${aws_apigatewayv2_integration.foods.id}"
 }
 
-resource "aws_apigatewayv2_integration" "orders" {
-  api_id             = aws_apigatewayv2_api.joyeuse_planete.id
-  integration_type   = "HTTP_PROXY"
-  integration_method = "ANY"
-  integration_uri    = "http://${var.orders_lb_ip}/api/v1/orders"
-}
-
-resource "aws_apigatewayv2_route" "orders" {
-  api_id    = aws_apigatewayv2_api.joyeuse_planete.id
-  route_key = "ANY /api/v1/orders/{proxy+}"
-  target    = "integrations/${aws_apigatewayv2_integration.orders.id}"
-}
-
-resource "aws_apigatewayv2_integration" "payment" {
-  api_id             = aws_apigatewayv2_api.joyeuse_planete.id
-  integration_type   = "HTTP_PROXY"
-  integration_method = "ANY"
-  integration_uri    = "http://${var.payments_lb_ip}/api/v1/payment"
-}
-
-resource "aws_apigatewayv2_route" "payment" {
-  api_id    = aws_apigatewayv2_api.joyeuse_planete.id
-  route_key = "ANY /api/v1/payment/{proxy+}"
-  target    = "integrations/${aws_apigatewayv2_integration.payment.id}"
-}
-
-resource "aws_apigatewayv2_integration" "notifications" {
-  api_id             = aws_apigatewayv2_api.joyeuse_planete.id
-  integration_type   = "HTTP_PROXY"
-  integration_method = "ANY"
-  integration_uri    = "http://${var.notifications_lb_ip}/api/v1/notifications"
-}
-
-resource "aws_apigatewayv2_route" "notifications" {
-  api_id    = aws_apigatewayv2_api.joyeuse_planete.id
-  route_key = "ANY /api/v1/notifications/{proxy+}"
-  target    = "integrations/${aws_apigatewayv2_integration.notifications.id}"
-}
+#resource "aws_apigatewayv2_integration" "orders" {
+#  api_id             = aws_apigatewayv2_api.joyeuse_planete.id
+#  integration_type   = "HTTP_PROXY"
+#  integration_method = "ANY"
+#  integration_uri    = "http://${var.orders_lb_ip}/api/v1"
+#}
+#
+#resource "aws_apigatewayv2_route" "orders" {
+#  api_id    = aws_apigatewayv2_api.joyeuse_planete.id
+#  route_key = "ANY /api/v1/orders/{proxy+}"
+#  target    = "integrations/${aws_apigatewayv2_integration.orders.id}"
+#}
+#
+#resource "aws_apigatewayv2_integration" "payment" {
+#  api_id             = aws_apigatewayv2_api.joyeuse_planete.id
+#  integration_type   = "HTTP_PROXY"
+#  integration_method = "ANY"
+#  integration_uri    = "http://${var.payments_lb_ip}/api/v1"
+#}
+#
+#resource "aws_apigatewayv2_route" "payment" {
+#  api_id    = aws_apigatewayv2_api.joyeuse_planete.id
+#  route_key = "ANY /api/v1/payment/{proxy+}"
+#  target    = "integrations/${aws_apigatewayv2_integration.payment.id}"
+#}
+#
+#resource "aws_apigatewayv2_integration" "notifications" {
+#  api_id             = aws_apigatewayv2_api.joyeuse_planete.id
+#  integration_type   = "HTTP_PROXY"
+#  integration_method = "ANY"
+#  integration_uri    = "http://${var.notifications_lb_ip}/api/v1"
+#}
+#
+#resource "aws_apigatewayv2_route" "notifications" {
+#  api_id    = aws_apigatewayv2_api.joyeuse_planete.id
+#  route_key = "ANY /api/v1/notifications/{proxy+}"
+#  target    = "integrations/${aws_apigatewayv2_integration.notifications.id}"
+#}
 
 resource "aws_apigatewayv2_deployment" "joyeuse_planete" {
   api_id = aws_apigatewayv2_api.joyeuse_planete.id
@@ -62,9 +62,9 @@ resource "aws_apigatewayv2_deployment" "joyeuse_planete" {
   triggers = {
     redeployment = sha1(jsonencode([
       aws_apigatewayv2_route.foods.id,
-      aws_apigatewayv2_route.orders.id,
-      aws_apigatewayv2_route.payment.id,
-      aws_apigatewayv2_route.notifications.id
+#      aws_apigatewayv2_route.orders.id,
+#      aws_apigatewayv2_route.payment.id,
+#      aws_apigatewayv2_route.notifications.id
     ]))
   }
 
