@@ -8,7 +8,7 @@ resource "aws_apigatewayv2_integration" "foods" {
   api_id             = aws_apigatewayv2_api.joyeuse_planete.id
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
-  integration_uri    = "http://${var.food_lb_ip}"
+  integration_uri    = "http://${var.food_lb_ip}/api/v1/foods"
 }
 
 resource "aws_apigatewayv2_route" "foods" {
@@ -21,7 +21,7 @@ resource "aws_apigatewayv2_integration" "orders" {
   api_id             = aws_apigatewayv2_api.joyeuse_planete.id
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
-  integration_uri    = "http://${var.orders_lb_ip}"
+  integration_uri    = "http://${var.orders_lb_ip}/api/v1/orders"
 }
 
 resource "aws_apigatewayv2_route" "orders" {
@@ -34,7 +34,7 @@ resource "aws_apigatewayv2_integration" "payment" {
   api_id             = aws_apigatewayv2_api.joyeuse_planete.id
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
-  integration_uri    = "http://${var.payments_lb_ip}"
+  integration_uri    = "http://${var.payments_lb_ip}/api/v1/payment"
 }
 
 resource "aws_apigatewayv2_route" "payment" {
@@ -47,7 +47,7 @@ resource "aws_apigatewayv2_integration" "notifications" {
   api_id             = aws_apigatewayv2_api.joyeuse_planete.id
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
-  integration_uri    = "http://${var.notifications_lb_ip}"
+  integration_uri    = "http://${var.notifications_lb_ip}/api/v1/notifications"
 }
 
 resource "aws_apigatewayv2_route" "notifications" {
