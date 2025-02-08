@@ -55,11 +55,11 @@ module "payment" {
   KAFKA_SERVER_IP       = data.aws_instance.KAFKA_SERVER.public_ip
 }
 
-# module "api_gate_way" {
-#   source                      = "./common/gateway"
+ module "api_gate_way" {
+   source              = "./common/gateway"
 
-#   food_load_balancer          = module.foods.food_nginx_public_ip
-#   notifications_load_balancer = module.notifications.notifications_nginx_public_ip
-#   orders_load_balancer        = module.orders.orders_nginx_public_ip
-#   payments_load_balancer      = module.payment.payments_nginx_public_ip
-# }
+   food_lb_ip          = module.foods.food_nginx_public_ip
+   notifications_lb_ip = module.notifications.notifications_nginx_public_ip
+   orders_lb_ip        = module.orders.orders_nginx_public_ip
+   payments_lb_ip      = module.payment.payments_nginx_public_ip
+ }

@@ -1,7 +1,7 @@
-# variable "food_load_balancer" {}
+ variable "food_lb_ip" {}
 
-# variable "orders_load_balancer" {}
+ variable "orders_lb_ip" {}
 
-# variable "payments_load_balancer" {}
+ variable "payments_lb_ip" {}
 
-# variable "notifications_load_balancer" {}
+ variable "notifications_lb_ip" {}
