@@ -16,7 +16,7 @@ resource "aws_instance" "server" {
 
     # Run the Docker container
     docker run -d -p 8080:8080 --name web_server \
-     -e KAFKA_SERVER_IP=http://${var.KAFKA_SERVER_IP}:9092 \
+     -e KAFKA_SERVER_IP=${var.KAFKA_SERVER_IP}:9092 \
     ${var.docker_image}
   EOF
 
