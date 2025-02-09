@@ -4,6 +4,19 @@ resource "aws_apigatewayv2_api" "joyeuse_planete" {
   protocol_type = "HTTP"
 }
 
+resource "aws_apigatewayv2_integration" "foods_root" {
+  api_id             = aws_apigatewayv2_api.joyeuse_planete.id
+  integration_type   = "HTTP_PROXY"
+  integration_method = "ANY"
+  integration_uri    = "http://${var.food_lb_ip}/api/v1/foods"
+}
+
+resource "aws_apigatewayv2_route" "foods_root" {
+  api_id    = aws_apigatewayv2_api.joyeuse_planete.id
+  route_key = "ANY /api/v1/foods"
+  target    = "integrations/${aws_apigatewayv2_integration.foods_root.id}"
+}
+
 resource "aws_apigatewayv2_integration" "foods" {
   api_id             = aws_apigatewayv2_api.joyeuse_planete.id
   integration_type   = "HTTP_PROXY"
@@ -14,12 +27,6 @@ resource "aws_apigatewayv2_integration" "foods" {
 resource "aws_apigatewayv2_route" "foods" {
   api_id    = aws_apigatewayv2_api.joyeuse_planete.id
   route_key = "ANY /api/v1/foods/{proxy+}"
-  target    = "integrations/${aws_apigatewayv2_integration.foods.id}"
-}
-
-resource "aws_apigatewayv2_route" "foods_root" {
-  api_id    = aws_apigatewayv2_api.joyeuse_planete.id
-  route_key = "ANY /api/v1/foods"
   target    = "integrations/${aws_apigatewayv2_integration.foods.id}"
 }
 
