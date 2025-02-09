@@ -8,7 +8,7 @@ resource "aws_apigatewayv2_integration" "foods" {
   api_id             = aws_apigatewayv2_api.joyeuse_planete.id
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
-  integration_uri    = "http://${var.food_lb_ip}/api/v1"
+  integration_uri    = "http://${var.food_lb_ip}/api/v1/foods/{proxy}"
 }
 
 resource "aws_apigatewayv2_route" "foods" {
@@ -57,7 +57,7 @@ resource "aws_apigatewayv2_route" "foods" {
 #}
 
 resource "aws_apigatewayv2_deployment" "joyeuse_planete" {
-  api_id = aws_apigatewayv2_api.joyeuse_planete.id
+  api_id   = aws_apigatewayv2_api.joyeuse_planete.id
 
   triggers = {
     redeployment = sha1(jsonencode([
@@ -74,10 +74,10 @@ resource "aws_apigatewayv2_deployment" "joyeuse_planete" {
 }
 
 resource "aws_apigatewayv2_stage" "default" {
-  api_id      = aws_apigatewayv2_api.joyeuse_planete.id
-  name        = "$default"
+  api_id        = aws_apigatewayv2_api.joyeuse_planete.id
+  name          = "$default"
   deployment_id = aws_apigatewayv2_deployment.joyeuse_planete.id
-  auto_deploy = true
+  auto_deploy   = true
 }
 
 output "joyeuse_planete_api_gateway_ip" {
