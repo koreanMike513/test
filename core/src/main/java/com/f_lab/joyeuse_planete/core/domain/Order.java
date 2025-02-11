@@ -2,7 +2,6 @@ package com.f_lab.joyeuse_planete.core.domain;
 
 
 import com.f_lab.joyeuse_planete.core.domain.base.BaseEntity;
-import com.f_lab.joyeuse_planete.core.domain.base.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,7 +19,6 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;

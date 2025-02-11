@@ -48,11 +48,11 @@ public class QFood extends EntityPathBase<Food> {
 
     public final NumberPath<java.math.BigDecimal> price = createNumber("price", java.math.BigDecimal.class);
 
-    public final NumberPath<Double> rate = createNumber("rate", Double.class);
+    public final NumberPath<java.math.BigDecimal> rate = createNumber("rate", java.math.BigDecimal.class);
 
     public final QStore store;
 
-    public final StringPath tags = createString("tags");
+    public final ListPath<String, StringPath> tags = this.<String, StringPath>createList("tags", String.class, StringPath.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> totalQuantity = createNumber("totalQuantity", Integer.class);
 
