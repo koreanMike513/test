@@ -18,6 +18,9 @@ variable "DOCKER_PAYMENT_IMAGE" {
   type        = string
 }
 
+variable "DATABASE_URL" {
+}
+
 variable "DATABASE_USERNAME" {
 }
 

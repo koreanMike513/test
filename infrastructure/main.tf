@@ -38,7 +38,7 @@ module "foods" {
   aws_key_pair_name     = module.key_pair.aws_key_pair_name
   KAFKA_SERVER_IP       = data.aws_instance.KAFKA_SERVER.public_ip
   MONITORING_SERVER_IP  = data.aws_instance.MONITORING_SERVER.public_ip
-  DATABASE_URL          = format("%s://%s/%s", "jdbc:mysql", data.aws_db_instance.database.endpoint, var.DATABASE_NAME)
+  DATABASE_URL          = var.DATABASE_URL
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
 }
