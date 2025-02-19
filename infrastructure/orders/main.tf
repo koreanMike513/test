@@ -3,7 +3,7 @@ module "servers" {
   app_region            = "eu-west-2"
   server_ami            = "ami-0cbf43fd299e3a464"
   server_instance_type  = "t3.medium"
-  server_count          = 3
+  server_count          = 2
 
   docker_image          = var.docker_orders_image
   aws_security_group_id = var.aws_security_group_id
@@ -45,6 +45,9 @@ variable "DATABASE_USERNAME" {
 }
 
 variable "DATABASE_PASSWORD" {
+}
+
+variable "TOSS_SECRET_KEY" {
 }
 
 variable "docker_orders_image" {

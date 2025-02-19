@@ -1,32 +1,50 @@
+server:
+  port: 8082
+
 spring:
-  datasource:
-    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      transaction-id-prefix: orders-tx
+
+    consumer:
+      group-id: orders
+
   jpa:
     hibernate:
       ddl-auto: create-drop
 
-  kafka:
-    producer:
-      transaction-id-prefix: test-tx
-    consumer:
-      group-id: orders-test
-
 orders:
   events:
-    topic:
-      name: orders.test
-      fail: orders.fail.test
+    topics:
+      create: orders.order-created-event
+      cancel: orders.order-cancellation-event
 
-  dead-letter-topic:
-    name: orders.test-dead-letter-topic
+  dead-letter-topic: orders.dead-letter-topic
 
 foods:
   events:
-    topic:
-      fail: foods.test-order-creation-failed-event
+    topics:
+      reserve: foods.food-reserved-event
+      reserve-fail: foods.food-reservation-failed-event
+
+  dead-letter-topic: foods.dead-letter-topic
+
+
+payment:
+  events:
+    topics:
+      process: payment.payment-processed-event
+      process-fail: payment.payment-processing-fail-event
+
+  dead-letter-topic: payment.dead-letter-topic
+
+kafka:
+  topic:
+    partitions: 3
+
+  container:
+    concurrency: 3
 
 logging:
   level:

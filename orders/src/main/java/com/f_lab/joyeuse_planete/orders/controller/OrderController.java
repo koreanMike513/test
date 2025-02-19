@@ -1,10 +1,12 @@
 package com.f_lab.joyeuse_planete.orders.controller;
 
 
-import com.f_lab.joyeuse_planete.orders.domain.OrderSearchCondition;
+
+import com.f_lab.joyeuse_planete.core.util.web.CommonResponses;
 import com.f_lab.joyeuse_planete.orders.dto.request.OrderCreateRequestDTO;
-import com.f_lab.joyeuse_planete.orders.dto.response.OrderCreateResponseDTO;
+import com.f_lab.joyeuse_planete.orders.dto.request.OrderSearchCondition;
 import com.f_lab.joyeuse_planete.orders.dto.response.OrderDTO;
+import com.f_lab.joyeuse_planete.orders.dto.response.OrderPollingResponseDTO;
 import com.f_lab.joyeuse_planete.orders.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 
 
 @Slf4j
@@ -50,13 +53,12 @@ public class OrderController {
   }
 
   @PostMapping("/foods")
-  public ResponseEntity<OrderCreateResponseDTO> createFoodOrder(
-      @RequestBody OrderCreateRequestDTO orderCreateRequestDTO
-  ) {
+  public ResponseEntity<String> createFoodOrder(@RequestBody OrderCreateRequestDTO orderCreateRequestDTO) {
+    orderService.createFoodOrder(orderCreateRequestDTO);
 
     return ResponseEntity
         .status(HttpStatus.CREATED)
-        .body(orderService.createFoodOrder(orderCreateRequestDTO));
+        .body(CommonResponses.CREATE_SUCCESS);
   }
 
   @DeleteMapping("/member/{orderId}")
@@ -65,12 +67,19 @@ public class OrderController {
 
     return ResponseEntity
         .status(HttpStatus.OK)
-        .body("DD");
+        .body(CommonResponses.DELETE_SUCCESS);
+  }
+
+  @GetMapping("{orderId}/polling/order-status")
+  public ResponseEntity<OrderPollingResponseDTO> polling(@PathVariable Long orderId) {
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(orderService.polling(orderId));
   }
 
   @GetMapping("/ping")
   public ResponseEntity<String> healthcheck() {
     return ResponseEntity.status(HttpStatus.OK)
-        .body("pong");
+        .body(CommonResponses.PONG);
   }
 }

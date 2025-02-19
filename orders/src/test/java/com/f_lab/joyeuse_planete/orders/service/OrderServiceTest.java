@@ -4,7 +4,7 @@ import com.f_lab.joyeuse_planete.core.domain.Order;
 import com.f_lab.joyeuse_planete.core.domain.OrderStatus;
 import com.f_lab.joyeuse_planete.core.exceptions.ErrorCode;
 import com.f_lab.joyeuse_planete.core.exceptions.JoyeusePlaneteApplicationException;
-import com.f_lab.joyeuse_planete.orders.domain.OrderSearchCondition;
+import com.f_lab.joyeuse_planete.orders.dto.request.OrderSearchCondition;
 import com.f_lab.joyeuse_planete.orders.dto.response.OrderDTO;
 import com.f_lab.joyeuse_planete.orders.repository.OrderRepository;
 import org.assertj.core.api.Assertions;

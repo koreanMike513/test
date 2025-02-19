@@ -3,7 +3,7 @@ module "servers" {
   app_region            = "eu-west-2"
   server_ami            = "ami-0cbf43fd299e3a464"
   server_instance_type  = "t3.medium"
-  server_count          = 2
+  server_count          = 3
 
   docker_image          = var.docker_food_image
   aws_security_group_id = var.aws_security_group_id
@@ -13,6 +13,7 @@ module "servers" {
   DATABASE_URL          = var.DATABASE_URL
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
+  TOSS_SECRET_KEY       = var.TOSS_SECRET_KEY
 }
 
 module "nginx" {
@@ -45,6 +46,9 @@ variable "DATABASE_USERNAME" {
 }
 
 variable "DATABASE_PASSWORD" {
+}
+
+variable "TOSS_SECRET_KEY" {
 }
 
 variable "docker_food_image" {

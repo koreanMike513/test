@@ -3,7 +3,7 @@ package com.f_lab.joyeuse_planete.orders.repository;
 
 import com.f_lab.joyeuse_planete.core.domain.Order;
 import com.f_lab.joyeuse_planete.core.domain.OrderStatus;
-import com.f_lab.joyeuse_planete.orders.domain.OrderSearchCondition;
+import com.f_lab.joyeuse_planete.orders.dto.request.OrderSearchCondition;
 import com.f_lab.joyeuse_planete.orders.dto.response.OrderDTO;
 import jakarta.annotation.Nullable;
 import org.junit.jupiter.api.AfterEach;
@@ -51,7 +51,7 @@ class OrderRepositoryTest {
     OrderSearchCondition condition = creatDefaultSearchCondition();
     Pageable pageable = createPageable(condition);
     List<OrderDTO> expected = getOrderList().stream()
-        .filter(o -> o.getCreatedAt().isAfter(LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0).minusDays(1)))
+        .filter(o -> o.getCreatedAt().isAfter(LocalDateTime.now().minusMonths(3)))
         .sorted(Comparator.comparing(Order::getCreatedAt).reversed())
         .limit(10)
         .map(this::from)

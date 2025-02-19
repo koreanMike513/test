@@ -27,5 +27,5 @@ variable "DATABASE_USERNAME" {
 variable "DATABASE_PASSWORD" {
 }
 
-variable "DATABASE_NAME" {
+variable "TOSS_SECRET_KEY" {
 }

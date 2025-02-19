@@ -13,6 +13,7 @@ module "servers" {
   DATABASE_URL          = var.DATABASE_URL
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
+  TOSS_SECRET_KEY       = var.TOSS_SECRET_KEY
 }
 
 module "nginx" {
@@ -45,6 +46,9 @@ variable "DATABASE_USERNAME" {
 }
 
 variable "DATABASE_PASSWORD" {
+}
+
+variable "TOSS_SECRET_KEY" {
 }
 
 variable "docker_payment_image" {

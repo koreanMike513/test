@@ -3,14 +3,15 @@ package com.f_lab.joyeuse_planete.orders.repository;
 import com.f_lab.joyeuse_planete.core.domain.Order;
 import com.f_lab.joyeuse_planete.core.domain.OrderStatus;
 
-import com.f_lab.joyeuse_planete.orders.domain.OrderSearchCondition;
+
+import com.f_lab.joyeuse_planete.orders.dto.request.OrderSearchCondition;
 import com.f_lab.joyeuse_planete.orders.dto.request.OrderCreateRequestDTO;
 import com.f_lab.joyeuse_planete.orders.dto.response.OrderDTO;
 import com.f_lab.joyeuse_planete.orders.dto.response.QOrderDTO;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 
 import org.springframework.data.domain.Page;
@@ -19,8 +20,6 @@ import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,16 +30,12 @@ import static com.f_lab.joyeuse_planete.core.domain.QPayment.payment;
 
 public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
 
-  private Map<String, OrderSpecifier> sortByMap = new HashMap<>();
-  private static final List<String> defaultSortBy = List.of("DATE_NEW");
-
-  @PostConstruct
-  void init() {
-    sortByMap.put("PRICE_LOW", order.totalCost.asc());
-    sortByMap.put("PRICE_HIGH", order.totalCost.desc());
-    sortByMap.put("DATE_NEW", order.createdAt.desc());
-    sortByMap.put("DATE_OLD", order.createdAt.asc());
-  }
+  private Map<String, OrderSpecifier> sortByMap = Map.of(
+      "PRICE_LOW", order.totalCost.asc(),
+      "PRICE_HIGH", order.totalCost.desc(),
+      "DATE_NEW", order.createdAt.desc(),
+      "DATE_OLD", order.createdAt.asc()
+  );
 
   private final JPAQueryFactory queryFactory;
 
@@ -50,7 +45,7 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
 
   @Override
   public Order saveOrder(OrderCreateRequestDTO request) {
-    long orderId = queryFactory
+    queryFactory
         .insert(order)
         .columns(
             order.food.id,
@@ -67,6 +62,11 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
             request.getVoucherId()
         )
         .execute();
+
+    Long orderId = queryFactory
+        .select(ExpressionUtils.template(Long.class, "LAST_INSERT_ID()"))
+        .from(order)
+        .fetchOne();
 
     return queryFactory.selectFrom(order).where(order.id.eq(orderId)).fetchFirst();
   }
@@ -92,8 +92,7 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
         .leftJoin(order.payment, payment)
         .leftJoin(food.currency, currency)
         .where(eqOrderId(orderId))
-        .fetch()
-        .get(0);
+        .fetchOne();
   }
 
   @Override
@@ -169,16 +168,23 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
   }
 
   private OrderSpecifier[] getOrders(List<String> sortBy) {
-    List<OrderSpecifier> list = new ArrayList<>();
-
-    if (sortBy == null)
-      sortBy = defaultSortBy;
+    int size = 0, idx = 0;
 
     for (String sort : sortBy) {
       if (sortByMap.containsKey(sort))
-        list.add(sortByMap.get(sort));
+        size++;
     }
 
-    return list.toArray(OrderSpecifier[]::new);
+    if (size == 0)
+      return new OrderSpecifier[]{ order.createdAt.desc() };
+
+    OrderSpecifier[] list = new OrderSpecifier[size];
+
+    for (String sort : sortBy) {
+      if (sortByMap.containsKey(sort))
+        list[idx++] = sortByMap.get(sort);
+    }
+
+    return list;
   }
 }

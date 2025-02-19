@@ -1,6 +1,7 @@
 package com.f_lab.joyeuse_planete.core.domain.base;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,5 +22,6 @@ public abstract class BaseEntity extends BaseTimeEntity {
   // TODO @CreatedBy & @LastModifiedBy AuditorAware 및 Spring Security 활용하여 구현해놓기
 
 
+  @Column(columnDefinition = "BOOLEAN NOT NULL DEFAULT 0")
   private boolean isDeleted;
 }
