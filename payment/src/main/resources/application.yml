@@ -1,48 +1,49 @@
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-        exclude: "env, beans"
-
-  info:
-    java:
-      enabled: true
-
-    os:
-      enabled: true
-
 server:
-  port: 8083
-  tomcat:
-    mbeanregistry:
-      enabled: true
+  port: 8086
 
 spring:
-  application:
-    name: payments
-
   kafka:
     bootstrap-servers: localhost:9092
     producer:
-      transaction-id-prefix: payments-tx
+      transaction-id-prefix: payment-tx
 
     consumer:
-      group-id: payments
+      group-id: payment
 
-payments:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+orders:
   events:
-    topic:
-      name: payments.order-creation-event
-      fail: payments.order-creation-failed-event
+    topics:
+      create: orders.order-created-event
+      cancel: orders.order-cancellation-event
 
-  dead-letter-topic:
-    name: payments.dead-letter-topic
+  dead-letter-topic: orders.dead-letter-topic
 
 foods:
   events:
-    topic:
-      name: foods.order-created-event
+    topics:
+      reserve: foods.food-reserved-event
+      reserve-fail: foods.food-reservation-failed-event
+      release: foods.food-release-event
+      release-fail: foods.food-release-failed-event
+
+  dead-letter-topic: foods.dead-letter-topic
+
+payment:
+  events:
+    topics:
+      process: payment.payment-processed-event
+      process-fail: payment.payment-processing-failed-event
+      refund: payment.refund-processed-event
+      refund-fail: payment.refund-processing-failed-event
+
+  dead-letter-topic: payment.dead-letter-topic
+
+toss:
+  secret-key: SECRET
 
 kafka:
   topic:
@@ -51,53 +52,6 @@ kafka:
   container:
     concurrency: 3
 
----
-
-spring:
-  config:
-    activate:
-      on-profile: prod
-
-  kafka:
-    bootstrap-servers: ${KAFKA_SERVER_IP}
-
-  datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    hibernate:
-      ddl-auto: create-drop
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-        exclude: "env, beans"
-
-  info:
-    java:
-      enabled: true
-
-    os:
-      enabled: true
-
-  prometheus:
-    metrics:
-      export:
-        pushgateway:
-          enabled: true
-          base-url: ${MONITORING_SERVER_IP}
-          push-rate: 30s
-          job: payment-service
-        enabled: true
-
-server:
-  port: 8080
-  tomcat:
-    mbeanregistry:
-      enabled: true
+logging:
+  level:
+    org.hibernate.sql: TRACE

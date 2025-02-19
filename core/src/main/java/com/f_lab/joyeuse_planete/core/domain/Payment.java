@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -30,11 +31,16 @@ public class Payment extends BaseEntity {
   @Id @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
+  private String paymentKey;
+
+  private String processor;
+
   private BigDecimal totalCost;
 
   @Enumerated(EnumType.STRING)
   private PaymentStatus status;
 
-  @OneToOne(mappedBy = "payment", fetch = LAZY)
+  @OneToOne(fetch = LAZY)
+  @JoinColumn(name = "order_id")
   private Order order;
 }

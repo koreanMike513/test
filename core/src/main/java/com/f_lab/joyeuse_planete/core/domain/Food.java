@@ -33,7 +33,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "foods")
-@SQLRestriction("is_deleted IS false")
+@SQLRestriction("is_deleted IS FALSE")
 @SQLDelete(sql = "UPDATE foods SET is_deleted = true WHERE id = ?")
 public class Food extends BaseEntity {
 

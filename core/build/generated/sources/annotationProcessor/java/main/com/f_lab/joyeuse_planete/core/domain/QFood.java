@@ -33,9 +33,6 @@ public class QFood extends EntityPathBase<Food> {
 
     public final QCurrency currency;
 
-    //inherited
-    public final BooleanPath deleted = _super.deleted;
-
     public final StringPath foodName = createString("foodName");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);

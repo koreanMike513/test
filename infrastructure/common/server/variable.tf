@@ -34,6 +34,9 @@ variable "DATABASE_USERNAME" {
 variable "DATABASE_PASSWORD" {
 }
 
+variable "TOSS_SECRET_KEY" {
+}
+
 variable "aws_security_group_id" {
   description = "Security group ID for EC2"
 }

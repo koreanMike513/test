@@ -1,5 +1,6 @@
 package com.f_lab.joyeuse_planete.orders.controller;
 
+import com.f_lab.joyeuse_planete.core.exceptions.JoyeusePlaneteApplicationException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,13 @@ public class GlobalExceptionHandler {
     return ResponseEntity
         .status(HttpStatus.CONFLICT)
         .body(ErrorResponse.of(e.getMessage(), HttpStatus.CONFLICT.value()));
+  }
+
+  @ExceptionHandler(JoyeusePlaneteApplicationException.class)
+  public ResponseEntity<ErrorResponse> handleJoyeusePlaneteException(JoyeusePlaneteApplicationException e) {
+    return ResponseEntity
+        .status(e.getErrorCode().getStatus())
+        .body(ErrorResponse.of(e.getMessage(), e.getErrorCode().getStatus()));
   }
 
   @ExceptionHandler(NoResourceFoundException.class)

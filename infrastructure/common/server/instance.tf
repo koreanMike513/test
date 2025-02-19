@@ -21,6 +21,7 @@ resource "aws_instance" "server" {
      -e DATABASE_URL=${var.DATABASE_URL} \
      -e DATABASE_USERNAME=${var.DATABASE_USERNAME} \
      -e DATABASE_PASSWORD=${var.DATABASE_PASSWORD} \
+     -e TOSS_SECRET_KEY=${var.TOSS_SECRET_KEY}
     ${var.docker_image}
   EOF
 

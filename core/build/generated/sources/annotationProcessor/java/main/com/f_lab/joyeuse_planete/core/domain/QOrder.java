@@ -22,7 +22,7 @@ public class QOrder extends EntityPathBase<Order> {
 
     public static final QOrder order = new QOrder("order1");
 
-    public final com.f_lab.joyeuse_planete.core.domain.base.QBaseTimeEntity _super = new com.f_lab.joyeuse_planete.core.domain.base.QBaseTimeEntity(this);
+    public final com.f_lab.joyeuse_planete.core.domain.base.QBaseEntity _super = new com.f_lab.joyeuse_planete.core.domain.base.QBaseEntity(this);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
@@ -32,13 +32,16 @@ public class QOrder extends EntityPathBase<Order> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     //inherited
+    public final BooleanPath isDeleted = _super.isDeleted;
+
+    //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     public final QPayment payment;
 
     public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
 
-    public final NumberPath<Double> rate = createNumber("rate", Double.class);
+    public final NumberPath<java.math.BigDecimal> rate = createNumber("rate", java.math.BigDecimal.class);
 
     public final EnumPath<OrderStatus> status = createEnum("status", OrderStatus.class);
 
