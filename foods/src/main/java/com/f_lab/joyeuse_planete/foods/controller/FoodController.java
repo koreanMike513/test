@@ -37,7 +37,7 @@ public class FoodController {
   @ResponseStatus(HttpStatus.OK)
   public Page<FoodDTO> getFoodList(@ModelAttribute FoodSearchCondition condition) {
     Pageable pageable = PageRequest.of(condition.getPage(), condition.getSize());
-    return foodService.getFoodList(condition, pageable);
+    return foodService.getFoodListTest(condition);
   }
 
   @GetMapping("/{foodId}")
