@@ -59,3 +59,7 @@ variable "docker_food_image" {
 output food_nginx_public_ip {
   value = module.nginx.load_balancer_public_id
 }
+
+output food_server_public_ips {
+  value = module.servers.server_ips
+}

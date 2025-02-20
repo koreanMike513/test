@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.f_lab.joyeuse_planete.core.domain.FoodTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-02-17T23:16:06" hostname="GUNHOui-MacBookPro-2.local" time="0.028">
+<testsuite name="com.f_lab.joyeuse_planete.core.domain.FoodTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-02-19T21:34:43" hostname="GUNHOui-MacBookPro-2.local" time="0.033">
   <properties/>
-  <testcase name="음식 수량을 줄였을 때 수량보다 많아서 실패할 때 예외 던짐" classname="com.f_lab.joyeuse_planete.core.domain.FoodTest" time="0.023"/>
+  <testcase name="음식 수량을 줄였을 때 수량보다 많아서 실패할 때 예외 던짐" classname="com.f_lab.joyeuse_planete.core.domain.FoodTest" time="0.026"/>
   <testcase name="음식 수량을 줄였을 때 성공" classname="com.f_lab.joyeuse_planete.core.domain.FoodTest" time="0.001"/>
-  <testcase name="tag를 setter로 등록하고 getter로 설정한대로 가져오는 것을 확인" classname="com.f_lab.joyeuse_planete.core.domain.FoodTest" time="0.003"/>
+  <testcase name="tag를 setter로 등록하고 getter로 설정한대로 가져오는 것을 확인" classname="com.f_lab.joyeuse_planete.core.domain.FoodTest" time="0.005"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
