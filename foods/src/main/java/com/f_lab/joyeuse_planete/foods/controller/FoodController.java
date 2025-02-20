@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 
 
 @RestController
@@ -34,9 +35,9 @@ public class FoodController {
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public Page<FoodDTO> getFoodList(@ModelAttribute FoodSearchCondition condition) {
+  public List<FoodDTO> getFoodList(@ModelAttribute FoodSearchCondition condition) {
     Pageable pageable = PageRequest.of(condition.getPage(), condition.getSize());
-    return foodService.getFoodList(condition, pageable);
+    return foodService.getFoodListTest(condition);
   }
 
   @GetMapping("/{foodId}")

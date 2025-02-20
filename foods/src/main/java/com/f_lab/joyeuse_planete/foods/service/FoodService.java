@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Timed("foods")
 @Service
@@ -30,6 +32,10 @@ public class FoodService {
 
   public Page<FoodDTO> getFoodList(FoodSearchCondition condition, Pageable pageable) {
     return foodRepository.getFoodList(condition, pageable);
+  }
+
+  public List<FoodDTO> getFoodListTest(FoodSearchCondition condition) {
+    return foodRepository.getFoodListTest(condition);
   }
 
   @Transactional
