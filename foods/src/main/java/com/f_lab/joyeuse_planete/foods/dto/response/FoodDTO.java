@@ -7,13 +7,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
 @Data
 @NoArgsConstructor
-public class FoodDTO {
+public class FoodDTO implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   @JsonProperty("food_id")
   private Long foodId;
