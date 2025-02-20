@@ -16,7 +16,7 @@ data "aws_instance" "KAFKA_SERVER" {
 }
 
 data "aws_instance" "MONITORING_SERVER" {
-  instance_id = "i-059a48a5d68268fa8"
+  instance_id = "i-0caeb491d91363733"
 }
 
 module "key_pair" {
@@ -38,6 +38,9 @@ module "foods" {
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
   TOSS_SECRET_KEY       = var.TOSS_SECRET_KEY
+  REDIS_HOST            = var.REDIS_HOST
+  REDIS_PORT            = var.REDIS_PORT
+  REDIS_PASSWORD        = var.REDIS_PASSWORD
 }
 
 module "orders" {
@@ -51,6 +54,9 @@ module "orders" {
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
   TOSS_SECRET_KEY       = var.TOSS_SECRET_KEY
+  REDIS_HOST            = var.REDIS_HOST
+  REDIS_PORT            = var.REDIS_PORT
+  REDIS_PASSWORD        = var.REDIS_PASSWORD
 }
 
 module "notifications" {
@@ -64,6 +70,9 @@ module "notifications" {
   DATABASE_USERNAME          = var.DATABASE_USERNAME
   DATABASE_PASSWORD          = var.DATABASE_PASSWORD
   TOSS_SECRET_KEY            = var.TOSS_SECRET_KEY
+  REDIS_HOST                 = var.REDIS_HOST
+  REDIS_PORT                 = var.REDIS_PORT
+  REDIS_PASSWORD             = var.REDIS_PASSWORD
 }
 
 module "payment" {
@@ -77,6 +86,9 @@ module "payment" {
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
   TOSS_SECRET_KEY       = var.TOSS_SECRET_KEY
+  REDIS_HOST            = var.REDIS_HOST
+  REDIS_PORT            = var.REDIS_PORT
+  REDIS_PASSWORD        = var.REDIS_PASSWORD
 }
 
  module "api_gate_way" {

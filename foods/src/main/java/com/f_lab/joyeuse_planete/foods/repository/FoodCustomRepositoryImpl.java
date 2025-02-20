@@ -67,30 +67,6 @@ public class FoodCustomRepositoryImpl implements FoodCustomRepository {
     return new PageImpl<>(result, pageable, count);
   }
 
-  @Override
-  public List<FoodDTO> getFoodListTest(FoodSearchCondition condition) {
-    return queryFactory
-        .select(new QFoodDTO(
-            food.id.as("foodId"),
-            food.store.id.as("storeId"),
-            food.currency.id.as("currencyId"),
-            food.foodName.as("foodName"),
-            food.price,
-            food.totalQuantity.as("totalQuantity"),
-            food.currency.currencyCode.as("currencyCode"),
-            food.currency.currencySymbol.as("currencySymbol"),
-            food.rate,
-            food.collectionStartTime,
-            food.collectionEndTime
-        ))
-        .from(food)
-        .innerJoin(food.currency, currency)
-        .innerJoin(food.store, store)
-        .where(eqFoodNameTagsAndStoreName(condition.getSearch()))
-        .orderBy(getOrders(condition.getSortBy()))
-        .fetch();
-  }
-
   private BooleanExpression eqFoodNameTagsAndStoreName(String search) {
     return (search != null)
         ? Expressions.anyOf(
