@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 data "aws_instance" "KAFKA_SERVER" {
-  instance_id = "i-04cb31060b856b83e"
+  instance_id = "i-00a35c8a2a342c55e"
 }
 
 data "aws_instance" "MONITORING_SERVER" {
