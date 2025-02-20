@@ -3,13 +3,13 @@ package com.f_lab.joyeuse_planete.foods.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 
-@Profile("prod")
 @Configuration
 public class RedisConfig {
 
@@ -23,11 +23,18 @@ public class RedisConfig {
   private String REDIS_PASSWORD;
 
   @Bean
+  @Profile("prod")
   public RedisConnectionFactory redisConnectionFactory() {
     RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(REDIS_HOST, REDIS_PORT);
     config.setPassword(REDIS_PASSWORD);
 
     return new LettuceConnectionFactory(config);
+  }
+
+  @Bean
+  @Profile("!prod")
+  public RedisConnectionFactory redisConnectionFactoryDefault() {
+    return new LettuceConnectionFactory(REDIS_HOST, REDIS_PORT);
   }
 
   @Bean
