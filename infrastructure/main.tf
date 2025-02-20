@@ -16,7 +16,7 @@ data "aws_instance" "KAFKA_SERVER" {
 }
 
 data "aws_instance" "MONITORING_SERVER" {
-  instance_id = "i-0caeb491d91363733"
+  instance_id = "i-059a48a5d68268fa8"
 }
 
 module "key_pair" {
