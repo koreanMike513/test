@@ -34,10 +34,6 @@ public class FoodService {
     return foodRepository.getFoodList(condition, pageable);
   }
 
-  public List<FoodDTO> getFoodListTest(FoodSearchCondition condition) {
-    return foodRepository.getFoodListTest(condition);
-  }
-
   @Transactional
   public void createFood(CreateFoodRequestDTO request) {
     Food food = request.toEntity();
