@@ -37,10 +37,6 @@ module "foods" {
   DATABASE_URL          = var.DATABASE_URL
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
-  TOSS_SECRET_KEY       = var.TOSS_SECRET_KEY
-  REDIS_HOST            = var.REDIS_HOST
-  REDIS_PORT            = var.REDIS_PORT
-  REDIS_PASSWORD        = var.REDIS_PASSWORD
 }
 
 module "orders" {
@@ -53,10 +49,6 @@ module "orders" {
   DATABASE_URL          = var.DATABASE_URL
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
-  TOSS_SECRET_KEY       = var.TOSS_SECRET_KEY
-  REDIS_HOST            = var.REDIS_HOST
-  REDIS_PORT            = var.REDIS_PORT
-  REDIS_PASSWORD        = var.REDIS_PASSWORD
 }
 
 module "notifications" {
@@ -69,10 +61,6 @@ module "notifications" {
   DATABASE_URL               = var.DATABASE_URL
   DATABASE_USERNAME          = var.DATABASE_USERNAME
   DATABASE_PASSWORD          = var.DATABASE_PASSWORD
-  TOSS_SECRET_KEY            = var.TOSS_SECRET_KEY
-  REDIS_HOST                 = var.REDIS_HOST
-  REDIS_PORT                 = var.REDIS_PORT
-  REDIS_PASSWORD             = var.REDIS_PASSWORD
 }
 
 module "payment" {
@@ -85,10 +73,6 @@ module "payment" {
   DATABASE_URL          = var.DATABASE_URL
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
-  TOSS_SECRET_KEY       = var.TOSS_SECRET_KEY
-  REDIS_HOST            = var.REDIS_HOST
-  REDIS_PORT            = var.REDIS_PORT
-  REDIS_PASSWORD        = var.REDIS_PASSWORD
 }
 
  module "api_gate_way" {

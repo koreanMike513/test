@@ -7,16 +7,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 @Data
 @NoArgsConstructor
-public class FoodDTO implements Serializable {
-
-  private static final long serialVersionUID = 1L;
+public class FoodDTO {
 
   @JsonProperty("food_id")
   private Long foodId;
@@ -46,10 +43,10 @@ public class FoodDTO implements Serializable {
   private BigDecimal rate;
 
   @JsonProperty("collection_start")
-  private LocalDateTime collectionStartTime;
+  private LocalTime collectionStartTime;
 
   @JsonProperty("collection_end")
-  private LocalDateTime collectionEndTime;
+  private LocalTime collectionEndTime;
 
   @Builder
   @QueryProjection
@@ -63,8 +60,8 @@ public class FoodDTO implements Serializable {
       String currencyCode,
       String currencySymbol,
       BigDecimal rate,
-      LocalDateTime collectionStartTime,
-      LocalDateTime collectionEndTime
+      LocalTime collectionStartTime,
+      LocalTime collectionEndTime
   ) {
     this.foodId = foodId;
     this.storeId = storeId;

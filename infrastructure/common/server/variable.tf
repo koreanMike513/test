@@ -34,18 +34,6 @@ variable "DATABASE_USERNAME" {
 variable "DATABASE_PASSWORD" {
 }
 
-variable "TOSS_SECRET_KEY" {
-}
-
-variable "REDIS_HOST" {
-}
-
-variable "REDIS_PORT" {
-}
-
-variable "REDIS_PASSWORD" {
-}
-
 variable "aws_security_group_id" {
   description = "Security group ID for EC2"
 }

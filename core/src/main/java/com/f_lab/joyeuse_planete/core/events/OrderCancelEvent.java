@@ -26,11 +26,10 @@ public class OrderCancelEvent {
 
   private BigDecimal totalCost;
 
-  public static OrderCancelEvent from(Order order) {
+  public static OrderCancelEvent toEvent(Order order) {
     return OrderCancelEvent.builder()
         .orderId(order.getId())
         .foodId(order.getFood().getId())
-        .paymentId(order.getPayment().getId())
         .voucherId(order.getVoucher().getId())
         .totalCost(order.getTotalCost())
         .quantity(order.getQuantity())

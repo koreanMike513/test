@@ -8,8 +8,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: "prometheus"
-
+        include: "*"
+        exclude: "env, beans"
   info:
     java:
       enabled: true
@@ -31,14 +31,6 @@ spring:
     hibernate:
       ddl-auto: validate
 
-  data:
-    redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
-      password: ${REDIS_PASSWORD}
-
 logging:
   level:
     org.hibernate.sql: ERROR
-    io.micrometer: DEBUG
-    io.micrometer.prometheus: DEBUG

@@ -5,16 +5,16 @@ import com.f_lab.joyeuse_planete.core.domain.OrderStatus;
 import com.f_lab.joyeuse_planete.core.events.OrderCancelEvent;
 import com.f_lab.joyeuse_planete.core.exceptions.ErrorCode;
 import com.f_lab.joyeuse_planete.core.exceptions.JoyeusePlaneteApplicationException;
-import com.f_lab.joyeuse_planete.core.kafka.service.KafkaService;
 import com.f_lab.joyeuse_planete.core.util.log.LogUtil;
 import com.f_lab.joyeuse_planete.orders.dto.request.OrderSearchCondition;
+import com.f_lab.joyeuse_planete.orders.dto.response.OrderCreateResponseDTO;
 import com.f_lab.joyeuse_planete.orders.dto.response.OrderDTO;
 import com.f_lab.joyeuse_planete.orders.dto.request.OrderCreateRequestDTO;
 import com.f_lab.joyeuse_planete.orders.dto.response.OrderPollingResponseDTO;
 import com.f_lab.joyeuse_planete.orders.repository.OrderRepository;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,13 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
 
   private final OrderRepository orderRepository;
-  private final KafkaService kafkaService;
-
-  @Value("${orders.events.topics.create}")
-  String ORDER_CREATED_EVENT;
-
-  @Value("${orders.events.topics.cancel}")
-  String ORDER_CANCELLATION_EVENT;
+  private final ApplicationEventPublisher eventPublisher;
 
   public Page<OrderDTO> getOrderList(OrderSearchCondition condition, Pageable pageable) {
     return orderRepository.findOrders(condition, pageable);
@@ -47,6 +41,26 @@ public class OrderService {
       throw new JoyeusePlaneteApplicationException(ErrorCode.ORDER_NOT_EXIST_EXCEPTION);
 
     return orderDTO;
+  }
+
+  @Transactional
+  public OrderCreateResponseDTO createFoodOrder(OrderCreateRequestDTO request) {
+    Order order;
+    try {
+      order = orderRepository.saveOrder(request);
+
+    } catch (JoyeusePlaneteApplicationException e) {
+      LogUtil.exception("OrderService.createFoodOrder", e);
+      throw e;
+
+    } catch (Exception e) {
+      LogUtil.exception("OrderService.createFoodOrder", e);
+      throw new JoyeusePlaneteApplicationException(ErrorCode.ORDER_CREATION_FAIL_EXCEPTION);
+    }
+
+    eventPublisher.publishEvent(request.toEvent(order.getId()));
+
+    return OrderCreateResponseDTO.of(order.getId());
   }
 
   @Transactional
@@ -71,7 +85,12 @@ public class OrderService {
       throw new JoyeusePlaneteApplicationException(ErrorCode.ORDER_CANCELLATION_FAIL_EXCEPTION);
     }
 
-    sendKafkaEventAndPayload(ORDER_CANCELLATION_EVENT, OrderCancelEvent.from(order));
+    eventPublisher.publishEvent(OrderCancelEvent.toEvent(order));
+  }
+
+  @Transactional
+  public void deleteOrderByStore(Long orderId) {
+    // TODO 가게에서 주문 취소 로직
   }
 
   @Transactional
@@ -81,40 +100,8 @@ public class OrderService {
     orderRepository.save(order);
   }
 
-  @Transactional
-  public void createFoodOrder(OrderCreateRequestDTO request) {
-    Order order;
-    try {
-      order = orderRepository.saveOrder(request);
-
-    } catch (JoyeusePlaneteApplicationException e) {
-      LogUtil.exception("OrderService.createFoodOrder", e);
-      throw e;
-
-    } catch (Exception e) {
-      LogUtil.exception("OrderService.createFoodOrder", e);
-      throw new RuntimeException(e);
-    }
-
-    sendKafkaEventAndPayload(ORDER_CREATED_EVENT, request.toEvent(order.getId()));
-  }
-
   public OrderPollingResponseDTO polling(Long orderId) {
     return OrderPollingResponseDTO.from(findOrderById(orderId));
-  }
-
-  public void sendKafkaEventAndPayload(String event, Object payload) {
-    try {
-      kafkaService.sendKafkaEvent(event, payload);
-
-    } catch(JoyeusePlaneteApplicationException e) {
-      LogUtil.exception("OrderService.sendKafkaOrderCreatedEvent", e);
-      throw e;
-
-    } catch(Exception e) {
-      LogUtil.exception("OrderService.sendKafkaOrderCreatedEvent", e);
-      throw new RuntimeException(e);
-    }
   }
 
   private Order findOrderById(Long orderId) {

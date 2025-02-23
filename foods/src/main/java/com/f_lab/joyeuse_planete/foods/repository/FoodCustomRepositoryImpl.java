@@ -53,7 +53,7 @@ public class FoodCustomRepositoryImpl implements FoodCustomRepository {
         .innerJoin(food.currency, currency)
         .innerJoin(food.store, store)
         .where(eqFoodNameTagsAndStoreName(condition.getSearch()))
-        .orderBy(getOrders(condition.getSortBy()))
+        .orderBy(getOrderSpecifiers(condition.getSortBy()))
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
         .fetch();
@@ -65,6 +65,30 @@ public class FoodCustomRepositoryImpl implements FoodCustomRepository {
         .get(0);
 
     return new PageImpl<>(result, pageable, count);
+  }
+
+  @Override
+  public List<FoodDTO> getFoodListTest(FoodSearchCondition condition) {
+    return queryFactory
+        .select(new QFoodDTO(
+            food.id.as("foodId"),
+            food.store.id.as("storeId"),
+            food.currency.id.as("currencyId"),
+            food.foodName.as("foodName"),
+            food.price,
+            food.totalQuantity.as("totalQuantity"),
+            food.currency.currencyCode.as("currencyCode"),
+            food.currency.currencySymbol.as("currencySymbol"),
+            food.rate,
+            food.collectionStartTime,
+            food.collectionEndTime
+        ))
+        .from(food)
+        .innerJoin(food.currency, currency)
+        .innerJoin(food.store, store)
+        .where(eqFoodNameTagsAndStoreName(condition.getSearch()))
+        .orderBy(getOrderSpecifiers(condition.getSortBy()))
+        .fetch();
   }
 
   private BooleanExpression eqFoodNameTagsAndStoreName(String search) {
@@ -79,24 +103,14 @@ public class FoodCustomRepositoryImpl implements FoodCustomRepository {
         : null;
   }
 
-  private OrderSpecifier[] getOrders(List<String> sortBy) {
-    int size = 0, idx = 0;
+  private OrderSpecifier[] getOrderSpecifiers(List<String> sortBy) {
+    OrderSpecifier[] specifiedOrders = sortBy.stream()
+        .filter(sortByMap::containsKey)
+        .map(sortByMap::get)
+        .toArray(OrderSpecifier[]::new);
 
-    for (String sort : sortBy) {
-      if (sortByMap.containsKey(sort))
-        size++;
-    }
-
-    if (size == 0)
-      return new OrderSpecifier[]{ food.rate.desc() };
-
-    OrderSpecifier[] list = new OrderSpecifier[size];
-
-    for (String sort : sortBy) {
-      if (sortByMap.containsKey(sort))
-        list[idx++] = sortByMap.get(sort);
-    }
-
-    return list;
+    return specifiedOrders.length > 0
+        ? specifiedOrders
+        : new OrderSpecifier[]{ food.rate.desc() };
   }
 }
