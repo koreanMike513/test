@@ -15,10 +15,6 @@ data "aws_instance" "KAFKA_SERVER" {
   instance_id = "i-00a35c8a2a342c55e"
 }
 
-data "aws_instance" "MONITORING_SERVER" {
-  instance_id = "i-059a48a5d68268fa8"
-}
-
 module "key_pair" {
   source = "./common/key"
 }
@@ -33,7 +29,6 @@ module "foods" {
   aws_security_group_id = module.securities.security_group_id
   aws_key_pair_name     = module.key_pair.aws_key_pair_name
   KAFKA_SERVER_IP       = data.aws_instance.KAFKA_SERVER.public_ip
-  MONITORING_SERVER_IP  = data.aws_instance.MONITORING_SERVER.public_ip
   DATABASE_URL          = var.DATABASE_URL
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
@@ -45,7 +40,6 @@ module "orders" {
   aws_security_group_id = module.securities.security_group_id
   aws_key_pair_name     = module.key_pair.aws_key_pair_name
   KAFKA_SERVER_IP       = data.aws_instance.KAFKA_SERVER.public_ip
-  MONITORING_SERVER_IP  = data.aws_instance.MONITORING_SERVER.public_ip
   DATABASE_URL          = var.DATABASE_URL
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
@@ -57,7 +51,6 @@ module "notifications" {
   aws_security_group_id      = module.securities.security_group_id
   aws_key_pair_name          = module.key_pair.aws_key_pair_name
   KAFKA_SERVER_IP            = data.aws_instance.KAFKA_SERVER.public_ip
-  MONITORING_SERVER_IP       = data.aws_instance.MONITORING_SERVER.public_ip
   DATABASE_URL               = var.DATABASE_URL
   DATABASE_USERNAME          = var.DATABASE_USERNAME
   DATABASE_PASSWORD          = var.DATABASE_PASSWORD
@@ -69,7 +62,6 @@ module "payment" {
   aws_security_group_id = module.securities.security_group_id
   aws_key_pair_name     = module.key_pair.aws_key_pair_name
   KAFKA_SERVER_IP       = data.aws_instance.KAFKA_SERVER.public_ip
-  MONITORING_SERVER_IP  = data.aws_instance.MONITORING_SERVER.public_ip
   DATABASE_URL          = var.DATABASE_URL
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
