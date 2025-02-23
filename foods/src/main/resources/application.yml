@@ -9,7 +9,7 @@ spring:
 
     consumer:
       group-id: foods
-      
+
   jpa:
     hibernate:
       ddl-auto: validate

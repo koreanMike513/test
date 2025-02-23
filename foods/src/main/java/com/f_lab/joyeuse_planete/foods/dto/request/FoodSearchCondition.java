@@ -24,7 +24,7 @@ public class FoodSearchCondition {
   int page = 0;
 
   @Min(value = 0, message = BeanValidationErrorMessage.NO_NEGATIVE_ERROR_MESSAGE)
-  int size = 25;
+  int size = 50;
 
   List<String> sortBy = List.of("RATE_HIGH");
 
