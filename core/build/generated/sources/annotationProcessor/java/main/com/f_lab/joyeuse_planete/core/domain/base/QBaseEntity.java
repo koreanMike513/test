@@ -24,6 +24,8 @@ public class QBaseEntity extends EntityPathBase<BaseEntity> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
+    public final BooleanPath deleted = createBoolean("deleted");
+
     public final BooleanPath isDeleted = createBoolean("isDeleted");
 
     //inherited

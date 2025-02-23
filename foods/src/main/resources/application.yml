@@ -9,16 +9,10 @@ spring:
 
     consumer:
       group-id: foods
-
+      
   jpa:
     hibernate:
-      ddl-auto: create-drop
-
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      password: none
+      ddl-auto: validate
 
 orders:
   events:

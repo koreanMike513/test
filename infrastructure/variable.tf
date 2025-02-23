@@ -27,14 +27,5 @@ variable "DATABASE_USERNAME" {
 variable "DATABASE_PASSWORD" {
 }
 
-variable "TOSS_SECRET_KEY" {
-}
-
-variable "REDIS_HOST" {
-}
-
-variable "REDIS_PORT" {
-}
-
-variable "REDIS_PASSWORD" {
+variable "DATABASE_NAME" {
 }

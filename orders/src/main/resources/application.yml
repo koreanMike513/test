@@ -37,12 +37,9 @@ payment:
   events:
     topics:
       process: payment.payment-processed-event
-      process-fail: payment.payment-processing-failed-event
-      refund: payment.refund-processed-event
-      refund-fail: payment.refund-processing-failed-event
+      process-fail: payment.payment-processing-fail-event
 
   dead-letter-topic: payment.dead-letter-topic
-
 
 kafka:
   topic:

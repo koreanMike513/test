@@ -8,7 +8,6 @@ import com.f_lab.joyeuse_planete.orders.dto.request.OrderSearchCondition;
 import com.f_lab.joyeuse_planete.orders.dto.request.OrderCreateRequestDTO;
 import com.f_lab.joyeuse_planete.orders.dto.response.OrderDTO;
 import com.f_lab.joyeuse_planete.orders.dto.response.QOrderDTO;
-import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -30,7 +29,7 @@ import static com.f_lab.joyeuse_planete.core.domain.QPayment.payment;
 
 public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
 
-  private Map<String, OrderSpecifier> sortByMap = Map.of(
+  private static final Map<String, OrderSpecifier> sortByMap = Map.of(
       "PRICE_LOW", order.totalCost.asc(),
       "PRICE_HIGH", order.totalCost.desc(),
       "DATE_NEW", order.createdAt.desc(),
@@ -45,7 +44,7 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
 
   @Override
   public Order saveOrder(OrderCreateRequestDTO request) {
-    queryFactory
+    long orderId = queryFactory
         .insert(order)
         .columns(
             order.food.id,
@@ -62,11 +61,6 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
             request.getVoucherId()
         )
         .execute();
-
-    Long orderId = queryFactory
-        .select(ExpressionUtils.template(Long.class, "LAST_INSERT_ID()"))
-        .from(order)
-        .fetchOne();
 
     return queryFactory.selectFrom(order).where(order.id.eq(orderId)).fetchFirst();
   }
@@ -122,7 +116,7 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
             totalCostGoe(condition.getMinCost()),
             totalCostLoe(condition.getMaxCost())
         )
-        .orderBy(getOrders(condition.getSortBy()))
+        .orderBy(getOrderSpecifiers(condition.getSortBy()))
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
         .fetch();
@@ -167,24 +161,14 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
     return order.id.eq(orderId);
   }
 
-  private OrderSpecifier[] getOrders(List<String> sortBy) {
-    int size = 0, idx = 0;
+  private OrderSpecifier[] getOrderSpecifiers(List<String> sortBy) {
+    OrderSpecifier[] specifiedOrders = sortBy.stream()
+        .filter(sortByMap::containsKey)
+        .map(sortByMap::get)
+        .toArray(OrderSpecifier[]::new);
 
-    for (String sort : sortBy) {
-      if (sortByMap.containsKey(sort))
-        size++;
-    }
-
-    if (size == 0)
-      return new OrderSpecifier[]{ order.createdAt.desc() };
-
-    OrderSpecifier[] list = new OrderSpecifier[size];
-
-    for (String sort : sortBy) {
-      if (sortByMap.containsKey(sort))
-        list[idx++] = sortByMap.get(sort);
-    }
-
-    return list;
+    return specifiedOrders.length > 0
+        ? specifiedOrders
+        : new OrderSpecifier[]{ order.createdAt.desc() };
   }
 }

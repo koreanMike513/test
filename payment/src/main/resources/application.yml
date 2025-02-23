@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8082
 
 spring:
   kafka:
@@ -32,6 +32,7 @@ foods:
 
   dead-letter-topic: foods.dead-letter-topic
 
+
 payment:
   events:
     topics:
@@ -41,9 +42,6 @@ payment:
       refund-fail: payment.refund-processing-failed-event
 
   dead-letter-topic: payment.dead-letter-topic
-
-toss:
-  secret-key: SECRET
 
 kafka:
   topic:

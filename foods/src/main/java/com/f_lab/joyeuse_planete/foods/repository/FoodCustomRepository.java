@@ -10,4 +10,7 @@ import java.util.List;
 public interface FoodCustomRepository {
 
   Page<FoodDTO> getFoodList(FoodSearchCondition condition, Pageable pageable);
+
+  List<FoodDTO> getFoodListTest(FoodSearchCondition condition);
+
 }
