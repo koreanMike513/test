@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 
 @RestController
@@ -40,12 +39,6 @@ public class FoodController {
     return ResponseEntity
         .status(HttpStatus.OK)
         .body(foodService.getFood(foodId));
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @GetMapping("/test/")
-  public List<FoodDTO> getFoodListTest(@ModelAttribute @Valid FoodSearchCondition condition) {
-    return foodService.getFoodListTest(condition);
   }
 
   @GetMapping

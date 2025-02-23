@@ -9,10 +9,17 @@ spring:
 
     consumer:
       group-id: foods
-      
+
+  datasource:
+    url: jdbc:mysql://joyeuse-planete-db.cpmeiucaside.eu-west-2.rds.amazonaws.com:3306/JOYEUSE_PLANETE_TEST
+    username: gunho
+    password: drafix0513
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQLDialect
 
 orders:
   events:
