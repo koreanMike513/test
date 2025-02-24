@@ -16,10 +16,10 @@ resource "aws_instance" "server" {
 
     # Run the Docker container
     docker run -d -p 8080:8080 --name web_server \
-     -e KAFKA_SERVER_IP=${var.KAFKA_SERVER_IP}:9092 \
-     -e DATABASE_URL=${var.DATABASE_URL} \
-     -e DATABASE_USERNAME=${var.DATABASE_USERNAME} \
-     -e DATABASE_PASSWORD=${var.DATABASE_PASSWORD} \
+     -e KAFKA_SERVER_IP="${var.KAFKA_SERVER_IP}:9092" \
+     -e DATABASE_URL="${var.DATABASE_URL}" \
+     -e DATABASE_USERNAME="${var.DATABASE_USERNAME}" \
+     -e DATABASE_PASSWORD="${var.DATABASE_PASSWORD}" \
      -e REDIS_HOST="${var.REDIS_HOST}" \
      -e REDIS_PORT="${var.REDIS_PORT}" \
      -e REDIS_PASSWORD="${var.REDIS_PASSWORD}" \
