@@ -19,7 +19,6 @@ variable "server_count" {
 }
 
 variable "KAFKA_SERVER_IP" {
-
 }
 
 variable "DATABASE_URL" {
@@ -29,6 +28,15 @@ variable "DATABASE_USERNAME" {
 }
 
 variable "DATABASE_PASSWORD" {
+}
+
+variable "REDIS_HOST" {
+}
+
+variable "REDIS_PORT" {
+}
+
+variable "REDIS_PASSWORD" {
 }
 
 variable "aws_security_group_id" {

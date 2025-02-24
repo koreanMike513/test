@@ -12,6 +12,9 @@ module "servers" {
   DATABASE_URL          = var.DATABASE_URL
   DATABASE_USERNAME     = var.DATABASE_USERNAME
   DATABASE_PASSWORD     = var.DATABASE_PASSWORD
+  REDIS_HOST            = var.REDIS_HOST
+  REDIS_PORT            = var.REDIS_PORT
+  REDIS_PASSWORD        = var.REDIS_PASSWORD
 }
 
 module "nginx" {
@@ -41,6 +44,15 @@ variable "DATABASE_USERNAME" {
 }
 
 variable "DATABASE_PASSWORD" {
+}
+
+variable "REDIS_HOST" {
+}
+
+variable "REDIS_PORT" {
+}
+
+variable "REDIS_PASSWORD" {
 }
 
 variable "docker_orders_image" {

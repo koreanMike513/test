@@ -32,3 +32,12 @@ variable "DATABASE_PASSWORD" {
 
 variable "DATABASE_NAME" {
 }
+
+variable "REDIS_HOST" {
+}
+
+variable "REDIS_PORT" {
+}
+
+variable "REDIS_PASSWORD" {
+}
