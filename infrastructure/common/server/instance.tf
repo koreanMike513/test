@@ -20,6 +20,9 @@ resource "aws_instance" "server" {
      -e DATABASE_URL=${var.DATABASE_URL} \
      -e DATABASE_USERNAME=${var.DATABASE_USERNAME} \
      -e DATABASE_PASSWORD=${var.DATABASE_PASSWORD} \
+     -e REDIS_HOST="${var.REDIS_HOST}" \
+     -e REDIS_PORT="${var.REDIS_PORT}" \
+     -e REDIS_PASSWORD="${var.REDIS_PASSWORD}" \
     ${var.docker_image}
   EOF
 
