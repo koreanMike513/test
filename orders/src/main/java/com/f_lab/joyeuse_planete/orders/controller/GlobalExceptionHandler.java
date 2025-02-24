@@ -5,11 +5,9 @@ import com.f_lab.joyeuse_planete.core.util.log.LogUtil;
 import com.f_lab.joyeuse_planete.core.util.web.ResultResponse;
 import com.f_lab.joyeuse_planete.core.util.web.ResultResponse.CommonErrorResponses;
 import io.swagger.v3.oas.annotations.Hidden;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

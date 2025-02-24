@@ -3,17 +3,19 @@ package com.f_lab.joyeuse_planete.foods.dto.response;
 import com.f_lab.joyeuse_planete.core.domain.Food;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.querydsl.core.annotations.QueryProjection;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 
 
 @Data
 @NoArgsConstructor
-public class FoodDTO {
+public class FoodDTO implements Serializable {
 
   @JsonProperty("food_id")
   private Long foodId;

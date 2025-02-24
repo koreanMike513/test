@@ -1,6 +1,5 @@
 package com.f_lab.joyeuse_planete.orders.dto.response;
 
-import com.f_lab.joyeuse_planete.core.util.web.ResultResponse;
 import com.f_lab.joyeuse_planete.core.util.web.ResultResponse.CommonResponses;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
