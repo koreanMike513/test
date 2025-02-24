@@ -2,8 +2,8 @@ package com.f_lab.joyeuse_planete.foods.controller;
 
 import com.f_lab.joyeuse_planete.core.util.web.ResultResponse;
 import com.f_lab.joyeuse_planete.core.util.web.ResultResponse.CommonResponses;
-import com.f_lab.joyeuse_planete.foods.dto.request.FoodSearchCondition;
 import com.f_lab.joyeuse_planete.foods.dto.request.CreateFoodRequestDTO;
+import com.f_lab.joyeuse_planete.foods.dto.request.FoodSearchCondition;
 import com.f_lab.joyeuse_planete.foods.dto.request.UpdateFoodRequestDTO;
 import com.f_lab.joyeuse_planete.foods.dto.response.FoodDTO;
 import com.f_lab.joyeuse_planete.foods.service.FoodService;

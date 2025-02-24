@@ -30,6 +30,7 @@ public class OrderCancelEvent {
     return OrderCancelEvent.builder()
         .orderId(order.getId())
         .foodId(order.getFood().getId())
+        .paymentId(order.getPayment().getId())
         .voucherId(order.getVoucher().getId())
         .totalCost(order.getTotalCost())
         .quantity(order.getQuantity())

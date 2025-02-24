@@ -24,9 +24,7 @@ public class FoodCustomRepositoryImpl implements FoodCustomRepository {
 
   private final JPAQueryFactory queryFactory;
   private static final Map<String, OrderSpecifier> sortByMap = Map.of(
-      "RATE_HIGH", food.rate.desc(),
-      "PRICE_LOW", food.price.asc(),
-      "PRICE_HIGH", food.price.desc()
+      "RATE_HIGH", food.rate.desc()
   );
 
   public FoodCustomRepositoryImpl(EntityManager em) {
